@@ -247,8 +247,10 @@ void Menu::up() {
     while (itemState[newIndex] == disabled) {
       newIndex--;
 
-      if (newIndex < 0) {
+      if (newIndex < 0 && !scrollInfinitely) {
         break;
+      } else {
+        newIndex = newIndex % itemCount;
       }
     }
 
@@ -270,11 +272,13 @@ void Menu::down() {
     while (itemState[newIndex] == disabled) {
       newIndex++;
 
-      if (newIndex >= itemCount) {
+      if (newIndex >= itemCount && !scrollInfinitely) {
         break;
+      } else {
+        newIndex = newIndex % itemCount;
       }
     }
-
+    // TODO: check how scrolling is affected with infinity option
     if (newIndex < itemCount) {
       if (newIndex >= startDisplayRow + maxDisplayRows) {
         startDisplayRow += 1;
