@@ -26,7 +26,7 @@ void Spec::reset() {
 }
 
 void Spec::init(TFT_eSPI *display) {
-  Serial.println("Initializing spec");
+  DEBUG_PRINTLN("Initializing spec");
 
   display->setTextFont(font);
   int textWidthInset = margins.left + margins.right + border.left + border.right;
@@ -133,7 +133,7 @@ void Spec::drawDownArrow(int32_t x, int32_t y, State state) {
 }
 
 void Spec::drawAt(int32_t x, int32_t y, const char *text, State state) {
-  Serial.printf("Drawing %s at %d,%d with state %d\n", text, x, y, state);
+  DEBUG_PRINTF("Drawing %s at %d,%d with state %d\n", text, x, y, state);
   // Fill with border color if we have a border
   if (border.left > 0 || border.right > 0 || border.top > 0 || border.bottom > 0) {
     display->fillRect(x, y, width, height, borderColors[state]);
@@ -164,7 +164,7 @@ int Menu::addItem(const char *label, State state) {
     itemState[itemCount] = state;
 
     if (state == selected) {
-      Serial.printf("Selecting %s\n", label);
+      DEBUG_PRINTF("Selecting %s\n", label);
       selectedIndex = itemCount;
     }
 
@@ -219,7 +219,7 @@ void Menu::drawAllVisibleItems() {
   for (int i = 0; i < maxDisplayRows; i++) {
     int rowIndex = i + startDisplayRow;
     if (selectedIndex < 0 && itemState[rowIndex] != disabled) {
-      Serial.printf("Setting selected index %d\n", rowIndex);
+      DEBUG_PRINTF("Setting selected index %d\n", rowIndex);
       selectedIndex = rowIndex;
       itemState[rowIndex] = selected;
     }
@@ -229,7 +229,7 @@ void Menu::drawAllVisibleItems() {
 
 void Menu::drawItem(int index) {
   if (index >= startDisplayRow && index < itemCount && index < startDisplayRow + maxDisplayRows) {
-    Serial.printf("Drawing item %d\n", index);
+    DEBUG_PRINTF("Drawing item %d\n", index);
     int y = titleHeight + itemHeight * (index - startDisplayRow);
     itemSpec.drawAt(0, y, items[index], itemState[index]);
     if (index == startDisplayRow && index != 0) {
@@ -242,8 +242,8 @@ void Menu::drawItem(int index) {
 }
 
 void Menu::up() {
-  if (selectedIndex > 0) {
-    int newIndex = selectedIndex - 1;
+  if (selectedIndex > 0 || scrollInfinitely) {
+    int newIndex = (selectedIndex - 1 + itemCount) % itemCount;
     while (itemState[newIndex] == disabled) {
       newIndex--;
 

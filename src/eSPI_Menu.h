@@ -15,6 +15,14 @@
 #define ESPI_MENU_MAX_ITEMS 15
 #endif
 
+#ifndef ESPI_MENU_DEBUG_PRINT_DISABLED
+#define DEBUG_PRINTLN(x) Serial.println(x)
+#define DEBUG_PRINTF(...) Serial.printf(__VA_ARGS__)
+#else
+#define DEBUG_PRINTLN(x)
+#define DEBUG_PRINTF(...)
+#endif
+
 namespace eSPIMenu {
 enum State { none = 0,
              selected = 1,
