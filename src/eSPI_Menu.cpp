@@ -242,8 +242,8 @@ void Menu::drawItem(int index) {
 }
 
 void Menu::up() {
-  if (selectedIndex > 0) {
-    int newIndex = selectedIndex - 1;
+  if (selectedIndex > 0 || scrollInfinitely) {
+    int newIndex = (selectedIndex - 1 + itemCount) % itemCount;
     while (itemState[newIndex] == disabled) {
       newIndex--;
 
