@@ -1,11 +1,24 @@
 {
   "name": "eSPI_Menu",
   "keywords": "TFT_eSPI,menu,TFT",
-  "description": "A menu system that leverages the TFT_eSPI library",
-  "repository":
-  {
+  "description": "A menu system that leverages the TFT_eSPI library. Fork updated for one button usage, some examples and arduino compatibility.",
+  "repository": {
     "type": "git",
-    "url": "https://github.com/judge2005/eSPI_Menu.git"
+    "url": "https://github.com/kamilkrz/eSPI_Menu.git"
   },
-  "version": "0.1"
+  "dependencies": {
+    "bodmer/TFT_eSPI": "^2.5.43"
+  },
+  "authors": [
+    {
+      "name": "judge2005",
+      "url": "https://github.com/judge2005/eSPI_Menu"
+    },
+    {
+      "name": "kamilkrz",
+      "url": "https://github.com/kamilkrz/eSPI_Menu",
+      "maintainer": true
+    }
+  ],
+  "version": "0.2"
 }
