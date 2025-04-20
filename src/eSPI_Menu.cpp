@@ -202,8 +202,12 @@ void Menu::show() {
     itemSpec.init(display);
     itemHeight = itemSpec.getHeight();
 
-    statusSpec.init(display);
-    statusHeight = statusSpec.getHeight();
+    if (strcmp(status, "") != 0) {
+      statusSpec.init(display);
+      statusHeight = statusSpec.getHeight();
+    } else {
+      statusHeight = 0;
+    }
 
     maxDisplayRows = (display->height() - titleHeight - statusHeight) / itemHeight;
     startDisplayRow = 0;
