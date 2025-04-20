@@ -151,11 +151,15 @@ void Spec::drawAt(int32_t x, int32_t y, const char *text, State state) {
   display->setViewport(0, 0, display->width(), display->height());
 }
 
-Menu::Menu(TFT_eSPI *display) : titleSpec(display), itemSpec(display), display(display) {
+Menu::Menu(TFT_eSPI *display) : titleSpec(display), itemSpec(display), statusSpec(display), display(display) {
 }
 
 void Menu::setTitle(const char *title) {
   strncpy(this->title, title, ESPI_MENU_MAX_TITLE_CHARS);
+}
+
+void Menu::setStatus(const char *status) {
+  strncpy(this->status, status, ESPI_MENU_MAX_STATUS_CHARS);
 }
 
 int Menu::addItem(const char *label, State state) {
@@ -185,6 +189,7 @@ void Menu::reset() {
   specsInited = false;
   titleSpec.reset();
   itemSpec.reset();
+  statusSpec.reset();
 }
 
 void Menu::show() {
@@ -197,7 +202,10 @@ void Menu::show() {
     itemSpec.init(display);
     itemHeight = itemSpec.getHeight();
 
-    maxDisplayRows = (display->height() - titleHeight) / itemHeight;
+    statusSpec.init(display);
+    statusHeight = statusSpec.getHeight();
+
+    maxDisplayRows = (display->height() - titleHeight - statusHeight) / itemHeight;
     startDisplayRow = 0;
   }
 
@@ -206,6 +214,7 @@ void Menu::show() {
   }
   titleSpec.drawAt(0, 0, title, none);
   drawAllVisibleItems();
+  statusSpec.drawAt(0, titleHeight + (maxDisplayRows * itemHeight), status, none);
 }
 
 void Menu::clear(uint16_t color) {
@@ -213,6 +222,7 @@ void Menu::clear(uint16_t color) {
   for (int i = 0; i < maxDisplayRows; i++) {
     itemSpec.clear(0, titleHeight + itemHeight * i, color);
   }
+  statusSpec.clear(0, display->height() - statusHeight, color);
 }
 
 void Menu::drawAllVisibleItems() {

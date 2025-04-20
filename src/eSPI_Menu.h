@@ -11,6 +11,10 @@
 #define ESPI_MENU_MAX_ITEM_CHARS 15
 #endif
 
+#ifndef ESPI_MENU_MAX_STATUS_CHARS
+#define ESPI_MENU_MAX_STATUS_CHARS 15
+#endif
+
 #ifndef ESPI_MENU_MAX_ITEMS
 #define ESPI_MENU_MAX_ITEMS 15
 #endif
@@ -88,6 +92,7 @@ class Menu {
   void reset();
   int addItem(const char *, State state = none);
   void setTitle(const char *);
+  void setStatus(const char *);
   void setInfiniteScroll(bool scroll);
 
   void show();
@@ -99,6 +104,7 @@ class Menu {
 
   Spec &getTitleSpec() { return titleSpec; }
   Spec &getItemSpec() { return itemSpec; }
+  Spec &getStatusSpec() { return statusSpec; }
 
  protected:
   void drawItem(int index);
@@ -109,6 +115,7 @@ class Menu {
   TFT_eSPI *display = 0;
 
   char title[ESPI_MENU_MAX_TITLE_CHARS + 1] = "";
+  char status[ESPI_MENU_MAX_STATUS_CHARS + 1] = "";
   char items[ESPI_MENU_MAX_ITEMS][ESPI_MENU_MAX_ITEM_CHARS + 1];
   State itemState[ESPI_MENU_MAX_ITEMS];
 
@@ -116,12 +123,14 @@ class Menu {
   int itemCount = 0;
   int itemHeight = 0;
   int titleHeight = 0;
+  int statusHeight = 0;
   uint8_t maxDisplayRows = 0;
   uint8_t startDisplayRow = 0;
   bool scrollInfinitely = false;
 
   Spec titleSpec;
   Spec itemSpec;
+  Spec statusSpec;
 };
 };  // namespace eSPIMenu
 #endif
