@@ -268,6 +268,9 @@ void Menu::up() {
       if (newIndex < startDisplayRow) {
         startDisplayRow -= 1;
       }
+      if (newIndex > startDisplayRow + maxDisplayRows) {
+        startDisplayRow = newIndex - maxDisplayRows + 1;
+      }
       itemState[selectedIndex] = none;
       selectedIndex = newIndex;
       itemState[selectedIndex] = selected;
@@ -288,7 +291,6 @@ void Menu::down() {
         newIndex = newIndex % itemCount;
       }
     }
-    // TODO: check how scrolling is affected with infinity option
     if (newIndex < itemCount) {
       if (newIndex >= startDisplayRow + maxDisplayRows) {
         startDisplayRow += 1;
