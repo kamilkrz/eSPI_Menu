@@ -293,6 +293,9 @@ void Menu::down() {
       if (newIndex >= startDisplayRow + maxDisplayRows) {
         startDisplayRow += 1;
       }
+      if (newIndex < startDisplayRow) {
+        startDisplayRow = 0;
+      }
       itemState[selectedIndex] = none;
       selectedIndex = newIndex;
       itemState[selectedIndex] = selected;
