@@ -218,7 +218,7 @@ void Menu::show() {
   }
   titleSpec.drawAt(0, 0, title, none);
   drawAllVisibleItems();
-  statusSpec.drawAt(0, titleHeight + (maxDisplayRows * itemHeight), status, none);
+  statusSpec.drawAt(0, display->height() - statusHeight, status, none);
 }
 
 void Menu::clear(uint16_t color) {
