@@ -146,7 +146,6 @@ void Spec::drawAt(int32_t x, int32_t y, const char *text, State state) {
   display->setTextDatum(TL_DATUM);
   display->setTextColor(foregroundColors[state], backgroundColors[state], true);
   display->setTextFont(font);
-  display->setTextSize(1);
   display->setViewport(x + textViewport.x, y + textViewport.y, textViewport.width, textViewport.height, false);
   display->drawString(text, x + textViewport.x, y + textViewport.y);
   display->setViewport(0, 0, display->width(), display->height());
