@@ -30,7 +30,6 @@ void Spec::init(TFT_eSPI *display) {
 
   display->setTextFont(font);
   int textWidthInset = margins.left + margins.right + border.left + border.right;
-  int textHeightInset = margins.top + margins.bottom + border.top + border.bottom;
 
   int16_t maxHeight = display->fontHeight();
   if (textViewport.height == -1) {
@@ -151,7 +150,8 @@ void Spec::drawAt(int32_t x, int32_t y, const char *text, State state) {
   display->setViewport(0, 0, display->width(), display->height());
 }
 
-Menu::Menu(TFT_eSPI *display) : titleSpec(display), itemSpec(display), statusSpec(display), display(display) {
+Menu::Menu(TFT_eSPI *display)
+    : display(display), titleSpec(display), itemSpec(display), statusSpec(display) {
 }
 
 void Menu::setTitle(const char *title) {
